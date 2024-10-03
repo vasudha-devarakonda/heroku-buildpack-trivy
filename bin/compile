@@ -1,14 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 set -e
 
-INSTALL_DIR="$CACHE_DIR/trivy"
-mkdir -p $INSTALL_DIR
+
+unset GIT_DIR
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+
 
 TRIVY_VERSION="0.40.0" 
-curl -sSL "https://github.com/aquasecurity/trivy/releases/download/v$TRIVY_VERSION/trivy_$TRIVY_VERSION_Linux-64bit.tar.gz" | tar xz -C $INSTALL_DIR
-
-
-chmod +x $INSTALL_DIR/trivy
-
-
-echo "export PATH=\$PATH:$INSTALL_DIR" >> $BUILD_DIR/.profile.d/trivy.sh
+TRIVY_URL="https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz"
+mkdir -p "$BUILD_DIR/bin"
+mkdir -p "$BUILD_DIR/.profile.d"
+echo "Downloading Trivy version ${TRIVY_VERSION}..."
+curl -L "${TRIVY_URL}" | tar xz -C "$BUILD_DIR/bin
+echo "-----> Trivy installed successfully in $BUILD_DIR/bin."
+echo "export PATH=\"$BUILD_DIR/bin:\$PATH\"" > "$BUILD_DIR/.profile.d/trivy.sh"
+exit 0

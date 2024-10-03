@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/bin/bash
 
 echo "trivy"
+=======
+echo "installing trivy"
+>>>>>>> 35250ed (add-trivy-installation-script)
 exit 0
